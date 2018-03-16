@@ -16,7 +16,6 @@ class StatusesController extends Controller
     {
 //        $statuses = Status::with('cl_category', 'requirement')->get();
         $statuses = Status::all();
-        dd($statuses);
         return view('statuses.index', compact('statuses'));
     }
 
@@ -27,7 +26,7 @@ class StatusesController extends Controller
      */
     public function create()
     {
-        //
+        return view('statuses.form');
     }
 
     /**
@@ -38,7 +37,11 @@ class StatusesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'title' => 'required|min:3'
+        ]);
+        Status::create($request->all());
+        return redirect()->route('statuses.index');
     }
 
     /**
@@ -60,7 +63,8 @@ class StatusesController extends Controller
      */
     public function edit(Status $status)
     {
-        //
+        $entity = $status;
+        return view('statuses.form', compact('entity'));
     }
 
     /**
@@ -72,7 +76,11 @@ class StatusesController extends Controller
      */
     public function update(Request $request, Status $status)
     {
-        //
+        $this->validate($request,[
+            'title' => 'required|min:3'
+        ]);
+        $status->update($request->all());
+        return redirect()->route('statuses.index');
     }
 
     /**
@@ -83,6 +91,7 @@ class StatusesController extends Controller
      */
     public function destroy(Status $status)
     {
-        //
+        $status->delete();
+        return redirect()->route('statuses.index');
     }
 }
