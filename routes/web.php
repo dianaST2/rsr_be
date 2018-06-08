@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('getFlights', 'FlightsController@getFlights');
+
+
+
 Route::get('welcome/{locale}', function ($locale) {
     App::setLocale($locale);
     return view('welcome');
